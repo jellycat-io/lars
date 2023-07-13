@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 void initChunk(Chunk *chunk) {
-  // Initialize the chunk's fields
+  // Initialize the Chunk struct
   chunk->count = 0;
   chunk->capacity = 0;
   chunk->code = NULL;
@@ -13,44 +13,88 @@ void initChunk(Chunk *chunk) {
 }
 
 void freeChunk(Chunk *chunk) {
-  // Free the dynamically allocated memory
+  // Free the dynamically allocated memory for code and lines arrays
   FREE_ARRAY(uint8_t, chunk->code, chunk->capacity);
   FREE_ARRAY(LineEncoding, chunk->lines, chunk->capacity);
+  // Free the value array
   freeValueArray(&chunk->constants);
-  // Reinitialize the chunk
+  // Reinitialize the Chunk struct
   initChunk(chunk);
 }
 
 void writeChunk(Chunk *chunk, uint8_t byte, int line) {
   if (chunk->capacity < chunk->count + 1) {
-    // If the capacity is not enough, grow the arrays
     int oldCapacity = chunk->capacity;
     chunk->capacity = GROW_CAPACITY(oldCapacity);
+    // Grow the code and lines arrays using the GROW_ARRAY macro
     chunk->code =
         GROW_ARRAY(uint8_t, chunk->code, oldCapacity, chunk->capacity);
     chunk->lines =
         GROW_ARRAY(LineEncoding, chunk->lines, oldCapacity, chunk->capacity);
   }
 
-  // Store the byte in the code array
+  // Store the bytecode instruction in the code array
   chunk->code[chunk->count] = byte;
 
   // Check if chunk is on a new line
   if (chunk->lineCount == 0 ||
       chunk->lines[chunk->lineCount - 1].line != line) {
-    // If it's a new line, store line information
+    // Create a new LineEncoding struct for the new line and store it in the
+    // lines array
     LineEncoding lineEncoding = {line, chunk->count, 1};
     chunk->lines[chunk->lineCount] = lineEncoding;
     chunk->lineCount++;
   } else {
-    // If it's the same line, increment the count for the last line
+    // Increment the count of the current line
     chunk->lines[chunk->lineCount - 1].count++;
   }
   chunk->count++;
 }
 
 int addConstant(Chunk *chunk, Value value) {
-  // Add the constant value to the constants array
+  // Write the value to the constants array and return its index
   writeValueArray(&chunk->constants, value);
   return chunk->constants.count - 1;
+}
+
+void writeConstant(Chunk *chunk, Value value, int line) {
+  int constant = addConstant(chunk, value);
+
+  if (constant <= UINT8_MAX) {
+    // If the constant index fits within a byte, write OP_CONSTANT followed by
+    // the constant index
+    writeChunk(chunk, OP_CONSTANT, line);
+    writeChunk(chunk, constant, line);
+  } else {
+    // If the constant index is larger, write OP_CONSTANT_LONG followed by the
+    // 3-byte constant index
+    writeChunk(chunk, OP_CONSTANT_LONG, line);
+    writeChunk(chunk, constant & 0xff, line);
+    writeChunk(chunk, (constant >> 8) & 0xff, line);
+    writeChunk(chunk, (constant >> 16) & 0xff, line);
+  }
+}
+
+int getLine(Chunk *chunk, int instruction) {
+  LineEncoding *line = NULL;
+
+  // Iterate over the line encodings in the lines array
+  for (int i = 0; i < chunk->lineCount; i++) {
+    if (chunk->lines[i].startInstruction <= instruction &&
+        instruction <
+            chunk->lines[i].startInstruction + chunk->lines[i].count) {
+      // If the instruction index is within the range of a line, store the line
+      // encoding and break the loop
+      line = &chunk->lines[i];
+      break;
+    }
+  }
+
+  // If a matching line encoding is found, return the line number
+  if (line != NULL) {
+    return line->line;
+  } else {
+    // Otherwise, return -1
+    return -1;
+  }
 }
