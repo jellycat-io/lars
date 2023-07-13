@@ -27,12 +27,10 @@ jobs:
     - name: Install dependencies (Windows)
       if: runner.os == 'Windows'
       run: |
-        choco install make mingw
-        mkdir CUnit
-        cd CUnit
-        curl -L -O https://github.com/emilbarton/CUnit-Windows/releases/download/v2.1.3/CUnit-2.1-3-windows.zip
-        Expand-Archive -Path CUnit-2.1-3-windows.zip -DestinationPath .
-        echo "$PWD\include" >> $env:GITHUB_PATH
+        choco install make msys2
+        refreshenv
+        pacman -S --noconfirm mingw-w64-x86_64-toolchain
+        pacman -S --noconfirm mingw-w64-x86_64-cunit
 
     - name: Build
       run: |
