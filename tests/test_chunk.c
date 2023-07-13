@@ -14,6 +14,7 @@ void test_chunk_initChunk(void) {
   CU_ASSERT_EQUAL(chunk.capacity, 0);
   CU_ASSERT_PTR_NULL(chunk.code);
   CU_ASSERT_PTR_NULL(chunk.lines);
+  CU_ASSERT_EQUAL(chunk.lineCount, 0);
   CU_ASSERT_TRUE(chunk.constants.count == 0);
 
   freeChunk(&chunk);
@@ -25,10 +26,11 @@ void test_chunk_writeChunk(void) {
 
   writeChunk(&chunk, 0x01, 123);
   writeChunk(&chunk, 0x02, 123);
-  writeChunk(&chunk, 0x03, 123);
+  writeChunk(&chunk, 0x03, 124);
 
   CU_ASSERT_EQUAL(chunk.count, 3);
   CU_ASSERT_EQUAL(chunk.capacity, 8);
+  CU_ASSERT_EQUAL(chunk.lineCount, 2);
   CU_ASSERT_PTR_NOT_NULL(chunk.code);
   CU_ASSERT_PTR_NOT_NULL(chunk.lines);
 

@@ -22,20 +22,11 @@ void disassembleChunk(Chunk *chunk, const char *name) {
   }
 }
 
-int getLineForInstruction(Chunk *chunk, int instruction) {
-  int lineStartIndex = 0;
-  while (lineStartIndex + 1 < chunk->lineCount &&
-         chunk->lines[lineStartIndex + 1].startInstruction <= instruction) {
-    lineStartIndex++;
-  }
-  return chunk->lines[lineStartIndex].line;
-}
-
 int disassembleInstruction(Chunk *chunk, int offset) {
   printf("%04d ", offset);
-  int line = getLineForInstruction(chunk, offset);
+  int line = getLine(chunk, offset);
 
-  if (offset > 0 && line == getLineForInstruction(chunk, offset - 1)) {
+  if (offset > 0 && line == getLine(chunk, offset - 1)) {
     printf("   | ");
   } else {
     printf("%4d ", line);
