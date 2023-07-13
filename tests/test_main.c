@@ -6,6 +6,8 @@
 extern void test_chunk_initChunk(void);
 extern void test_chunk_writeChunk(void);
 extern void test_chunk_addConstant(void);
+extern void test_chunk_with_less_than_256_unique_constants(void);
+extern void test_chunk_with_more_than_256_unique_constants(void);
 
 int main() {
   /* Initialize the CUnit test registry */
@@ -25,7 +27,13 @@ int main() {
       (NULL ==
        CU_add_test(pSuite, "test_chunk_writeChunk", test_chunk_writeChunk)) ||
       (NULL ==
-       CU_add_test(pSuite, "test_chunk_addConstant", test_chunk_addConstant))) {
+       CU_add_test(pSuite, "test_chunk_addConstant", test_chunk_addConstant)) ||
+      (NULL == CU_add_test(pSuite,
+                           "test_chunk_with_less_than_256_unique_constants",
+                           test_chunk_with_less_than_256_unique_constants)) ||
+      (NULL == CU_add_test(pSuite,
+                           "test_chunk_with_more_than_256_unique_constants",
+                           test_chunk_with_more_than_256_unique_constants))) {
     CU_cleanup_registry();
     return CU_get_error();
   }
