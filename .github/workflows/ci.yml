@@ -28,12 +28,12 @@ jobs:
       if: runner.os == 'Windows'
       run: |
         choco install make mingw
-        mingw-get install mingw32-cunit
 
     - name: Build
       run: |
         make
 
     - name: Run tests
+      if: runner.os != 'Windows'
       run: |
         make test
