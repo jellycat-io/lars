@@ -28,12 +28,11 @@ jobs:
       if: runner.os == 'Windows'
       run: |
         choco install make mingw
-        curl -L -O https://sourceforge.net/projects/cunit/files/CUnit/2.1-3/CUnit-2.1-3-src.tar.bz2
-        tar -xf CUnit-2.1-3-src.tar.bz2
-        cd CUnit-2.1-3
-        mingw32-make
-        mingw32-make install
-        echo "C:\CUnit\include" >> $GITHUB_PATH
+        mkdir CUnit
+        cd CUnit
+        curl -L -O https://github.com/emilbarton/CUnit-Windows/releases/download/v2.1.3/CUnit-2.1-3-windows.zip
+        Expand-Archive -Path CUnit-2.1-3-windows.zip -DestinationPath .
+        echo "$PWD\include" >> $env:GITHUB_PATH
 
     - name: Build
       run: |
