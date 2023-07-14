@@ -10,10 +10,15 @@ int main() {
   Chunk chunk;
   initChunk(&chunk);
 
-  for (int i = 0; i < 300; i++) {
-    writeConstant(&chunk, i, i);
-  }
-  writeChunk(&chunk, OP_RETURN, 300);
+  writeConstant(&chunk, 6, 123);
+  writeConstant(&chunk, 7, 123);
+  writeChunk(&chunk, OP_MULTIPLY, 123);
+  writeConstant(&chunk, 7, 123);
+  writeChunk(&chunk, OP_ADD, 123);
+  writeConstant(&chunk, 7, 123);
+  writeChunk(&chunk, OP_DIVIDE, 123);
+  writeChunk(&chunk, OP_NEGATE, 123);
+  writeChunk(&chunk, OP_RETURN, 124);
 
   interpret(&chunk);
   freeVM();
