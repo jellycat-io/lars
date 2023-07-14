@@ -69,4 +69,4 @@ test: $(TESTTARGET)
 	./$(TESTTARGET)
 
 $(TESTTARGET): $(filter-out build/main.o, $(OBJS)) $(TEST_OBJS)
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ $(LDLIBS) -o $@ 
+	$(CC) -DTEST $(CFLAGS) $(LDFLAGS) $^ $(LDLIBS) -o $@ 

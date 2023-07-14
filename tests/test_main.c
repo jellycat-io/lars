@@ -9,11 +9,14 @@ extern void test_chunk_addConstant(void);
 extern void test_chunk_with_less_than_256_unique_constants(void);
 extern void test_chunk_with_more_than_256_unique_constants(void);
 // Declare the test functions from test_vm.c
-extern void test_interpret_with_constant(void);
-extern void test_interpret_with_multiple_constants(void);
-extern void test_interpret_with_invalid_instruction(void);
-extern void test_interpret_with_empty_chunk(void);
-extern void test_interpret_with_debug_trace(void);
+extern void test_vm_interpret_with_constant(void);
+extern void test_vm_interpret_with_multiple_constants(void);
+extern void test_vm_interpret_with_invalid_instruction(void);
+extern void test_vm_interpret_with_empty_chunk(void);
+extern void test_vm_interpret_with_debug_trace(void);
+extern void test_vm_stack_push_pop(void);
+extern void test_vm_stack_overflow(void);
+extern void test_vm_stack_underflow(void);
 
 int main() {
   /* Initialize the CUnit test registry */
@@ -50,16 +53,25 @@ int main() {
     return CU_get_error();
   }
   // Add the tests to the suite
-  if ((NULL == CU_add_test(pVMSuite, "test_interpret_with_constant",
-                           test_interpret_with_constant)) ||
-      (NULL == CU_add_test(pVMSuite, "test_interpret_with_multiple_constants",
-                           test_interpret_with_multiple_constants)) ||
-      (NULL == CU_add_test(pVMSuite, "test_interpret_with_invalid_instruction",
-                           test_interpret_with_invalid_instruction)) ||
-      (NULL == CU_add_test(pVMSuite, "test_interpret_with_empty_chunk",
-                           test_interpret_with_empty_chunk)) ||
-      (NULL == CU_add_test(pVMSuite, "test_interpret_with_debug_trace",
-                           test_interpret_with_debug_trace))) {
+  if ((NULL == CU_add_test(pVMSuite, "test_vm_interpret_with_constant",
+                           test_vm_interpret_with_constant)) ||
+      (NULL == CU_add_test(pVMSuite,
+                           "test_vm_interpret_with_multiple_constants",
+                           test_vm_interpret_with_multiple_constants)) ||
+      (NULL == CU_add_test(pVMSuite,
+                           "test_vm_interpret_with_invalid_instruction",
+                           test_vm_interpret_with_invalid_instruction)) ||
+      (NULL == CU_add_test(pVMSuite, "test_vm_interpret_with_empty_chunk",
+                           test_vm_interpret_with_empty_chunk)) ||
+      (NULL == CU_add_test(pVMSuite, "test_vm_interpret_with_debug_trace",
+                           test_vm_interpret_with_debug_trace)) ||
+      (NULL ==
+       CU_add_test(pVMSuite, "test_vm_stack_push_pop", test_vm_stack_push_pop))
+      // (NULL == CU_add_test(pVMSuite, "test_vm_stack_overflow",
+      //                      test_vm_stack_overflow)) ||
+      // (NULL == CU_add_test(pVMSuite, "test_vm_stack_underflow",
+      //                      test_vm_stack_underflow))
+  ) {
     CU_cleanup_registry();
     return CU_get_error();
   }
