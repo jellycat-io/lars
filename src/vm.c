@@ -1,5 +1,6 @@
 #include "vm.h"
 #include "common.h"
+#include "compiler.h"
 #include "debug.h"
 #include "value.h"
 #include <stdio.h>
@@ -34,9 +35,10 @@ static InterpretResult run() {
     disassembleInstruction(vm.chunk, (int)(vm.ip - vm.chunk->code));
 #endif
 
-    uint8_t instruction;
-    switch (instruction = READ_BYTE()) {
-    case OP_CONSTANT: {
+    switch (READ_BYTE()) {
+    case OP_CONSTANT:
+    case OP_CONSTANT_16:
+    case OP_CONSTANT_24: {
       Value constant = READ_CONSTANT();
       push(constant);
       break;
@@ -70,10 +72,22 @@ static InterpretResult run() {
 #undef BINARY_OP
 }
 
-InterpretResult interpret(Chunk *chunk) {
-  vm.chunk = chunk;
+InterpretResult interpret(const char *source) {
+  Chunk chunk;
+  initChunk(&chunk);
+
+  if (!compile(source, &chunk)) {
+    freeChunk(&chunk);
+    return INTERPRET_COMPILE_ERROR;
+  }
+
+  vm.chunk = &chunk;
   vm.ip = vm.chunk->code;
-  return run();
+
+  InterpretResult result = run();
+
+  freeChunk(&chunk);
+  return result;
 }
 
 void push(Value value) {

@@ -87,19 +87,19 @@ void test_chunk_with_more_than_256_unique_constants(void) {
   }
 
   // Check that the count of chunk's bytes is 256 * 2 (OP_CONSTANT + 1-byte
-  // constant index) + 44 * 4 (OP_CONSTANT_LONG + 3-byte constant index) = 688
+  // constant index) + 44 * 3 (OP_CONSTANT_16 + 2-byte constant index) = 644
   // entries
 
-  CU_ASSERT_EQUAL(chunk.count, 688);
+  CU_ASSERT_EQUAL(chunk.count, 644);
 
   // Check that the first 255 * 2 entries in the chunk use OP_CONSTANT
   for (int i = 0; i < 256 * 2; i += 2) {
     CU_ASSERT_EQUAL(chunk.code[i], OP_CONSTANT);
   }
 
-  // Check that the remaining entries in the chunk use OP_CONSTANT_LONG
-  for (int i = 256 * 2; i < chunk.count; i += 4) {
-    CU_ASSERT_EQUAL(chunk.code[i], OP_CONSTANT_LONG);
+  // Check that the remaining entries in the chunk use OP_CONSTANT_16
+  for (int i = 256 * 2; i < chunk.count; i += 3) {
+    CU_ASSERT_EQUAL(chunk.code[i], OP_CONSTANT_16);
   }
 
   freeChunk(&chunk);
