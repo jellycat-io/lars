@@ -35,9 +35,10 @@ static InterpretResult run() {
     disassembleInstruction(vm.chunk, (int)(vm.ip - vm.chunk->code));
 #endif
 
-    uint8_t instruction;
-    switch (instruction = READ_BYTE()) {
-    case OP_CONSTANT: {
+    switch (READ_BYTE()) {
+    case OP_CONSTANT:
+    case OP_CONSTANT_16:
+    case OP_CONSTANT_24: {
       Value constant = READ_CONSTANT();
       push(constant);
       break;

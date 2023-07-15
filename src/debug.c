@@ -12,8 +12,15 @@ static int simpleInstruction(const char *name, int offset) {
 static int constantInstruction(const char *name, Chunk *chunk, int offset) {
   int constant = chunk->code[offset + 1];
 
-  // Handle OP_CONSTANT_LONG
-  if (strcmp(name, "OP_CONSTANT_LONG") == 0) {
+  // Handle OP_CONSTANT_16 and OP_CONSTANT_24
+  if (strcmp(name, "OP_CONSTANT_16") == 0) {
+    // Retrieve the constant value from the 2-byte index
+    constant += chunk->code[offset + 2] << 8;
+    printf("%-16s %4d '", name, constant);
+    printValue(chunk->constants.values[constant]);
+    printf("'\n");
+    return offset + 3;
+  } else if (strcmp(name, "OP_CONSTANT_24") == 0) {
     // Retrieve the constant value from the 3-byte index
     constant += chunk->code[offset + 2] << 8;
     constant += chunk->code[offset + 3] << 16;
@@ -51,8 +58,8 @@ int disassembleInstruction(Chunk *chunk, int offset) {
   switch (instruction) {
   case OP_CONSTANT:
     return constantInstruction("OP_CONSTANT", chunk, offset);
-  case OP_CONSTANT_LONG:
-    return constantInstruction("OP_CONSTANT_LONG", chunk, offset);
+  case OP_CONSTANT_24:
+    return constantInstruction("OP_CONSTANT_24", chunk, offset);
   case OP_ADD:
     return simpleInstruction("OP_ADD", offset);
   case OP_SUBSTRACT:

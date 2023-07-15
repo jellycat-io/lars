@@ -39,7 +39,7 @@ static Token makeToken(TokenType type) {
   Token token;
   token.type = type;
   token.start = scanner.start;
-  token.length = (int)(scanner.current = scanner.start);
+  token.length = (int)(scanner.current - scanner.start);
   token.line = scanner.line;
   return token;
 }
@@ -80,6 +80,7 @@ static void skipWhitespace() {
 static bool isAlpha(char c) {
   return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_';
 }
+
 static bool isDigit(char c) { return c >= '0' && c <= '9'; }
 
 static TokenType checkKeyword(int start, int length, const char *rest,

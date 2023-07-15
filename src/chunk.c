@@ -51,6 +51,8 @@ void writeChunk(Chunk *chunk, uint8_t byte, int line) {
   chunk->count++;
 }
 
+int getConstantCount(Chunk *chunk) { return chunk->constants.count - 1; }
+
 int addConstant(Chunk *chunk, Value value) {
   // Write the value to the constants array and return its index
   writeValueArray(&chunk->constants, value);
@@ -65,10 +67,16 @@ void writeConstant(Chunk *chunk, Value value, int line) {
     // the constant index
     writeChunk(chunk, OP_CONSTANT, line);
     writeChunk(chunk, constant, line);
+  } else if (constant <= UINT16_MAX) {
+    // If the constant index is larger, write OP_CONSTANT_16 followed by the
+    // 2-byte constant index
+    writeChunk(chunk, OP_CONSTANT_16, line);
+    writeChunk(chunk, constant & 0xff, line);
+    writeChunk(chunk, (constant >> 8) & 0xff, line);
   } else {
-    // If the constant index is larger, write OP_CONSTANT_LONG followed by the
+    // If the constant index is larger, write OP_CONSTANT_24 followed by the
     // 3-byte constant index
-    writeChunk(chunk, OP_CONSTANT_LONG, line);
+    writeChunk(chunk, OP_CONSTANT_24, line);
     writeChunk(chunk, constant & 0xff, line);
     writeChunk(chunk, (constant >> 8) & 0xff, line);
     writeChunk(chunk, (constant >> 16) & 0xff, line);
