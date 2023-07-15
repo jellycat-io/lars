@@ -106,7 +106,7 @@ static void emitByte(uint8_t byte) {
 }
 
 // Emit two bytecode instructions
-static void emitBytes(uint8_t byte1, u_int8_t byte2) {
+static void emitBytes(uint8_t byte1, uint8_t byte2) {
   emitByte(byte1);
   emitByte(byte2);
 }
