@@ -64,3 +64,5 @@ build/
 .DS_Store
 
 .fake
+
+*.lars
