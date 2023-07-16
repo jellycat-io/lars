@@ -53,6 +53,16 @@ void writeChunk(Chunk *chunk, uint8_t byte, int line) {
 
 int getConstantCount(Chunk *chunk) { return chunk->constants.count - 1; }
 
+Value getTopStackConstant(Chunk *chunk) {
+  if (chunk->constants.count > 0) {
+    // Return the last constant in the constants array
+    return chunk->constants.values[chunk->constants.count - 1];
+  } else {
+    // No constants in the array, return NIL_VAL
+    return NIL_VAL;
+  }
+}
+
 int addConstant(Chunk *chunk, Value value) {
   // Write the value to the constants array and return its index
   writeValueArray(&chunk->constants, value);

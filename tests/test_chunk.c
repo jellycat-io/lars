@@ -3,6 +3,7 @@
 #include "chunk.h"
 #include "common.h"
 #include "debug.h"
+#include "value.h"
 #include <CUnit/Basic.h>
 #include <CUnit/CUnit.h>
 #include <stdio.h>
@@ -46,8 +47,8 @@ void test_chunk_addConstant(void) {
   initChunk(&chunk);
 
   // Add two constants to the chunk
-  int index1 = addConstant(&chunk, 3.14);
-  int index2 = addConstant(&chunk, true);
+  int index1 = addConstant(&chunk, NUMBER_VAL(3.14));
+  int index2 = addConstant(&chunk, BOOL_VAL(true));
 
   // Check that constants are added correctly
   CU_ASSERT_EQUAL(index1, 0);
@@ -63,7 +64,7 @@ void test_chunk_with_less_than_256_unique_constants(void) {
 
   // Add 255 unique constants to the chunk
   for (int i = 0; i < 255; i++) {
-    writeConstant(&chunk, i, 1);
+    writeConstant(&chunk, NUMBER_VAL(i), 1);
   }
 
   // Check that the count of chunk's bytes is equal to 255 * 2 bytes
@@ -83,7 +84,7 @@ void test_chunk_with_more_than_256_unique_constants(void) {
 
   // Add 300 unique constants to the chunk
   for (int i = 0; i < 300; i++) {
-    writeConstant(&chunk, i, 1);
+    writeConstant(&chunk, NUMBER_VAL(i), 1);
   }
 
   // Check that the count of chunk's bytes is 256 * 2 (OP_CONSTANT + 1-byte

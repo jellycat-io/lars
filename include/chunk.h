@@ -35,6 +35,7 @@ void initChunk(Chunk *chunk);
 void freeChunk(Chunk *chunk);
 void writeChunk(Chunk *chunk, uint8_t byte, int line);
 int getConstantCount(Chunk *chunk);
+Value getTopStackConstant(Chunk *chunk);
 int addConstant(Chunk *chunk, Value value);
 void writeConstant(Chunk *chunk, Value value, int line);
 int getLine(Chunk *chunk, int instruction);
