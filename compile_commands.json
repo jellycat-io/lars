@@ -1,0 +1,155 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-std=c99",
+      "-Wall",
+      "-Wextra",
+      "-I/opt/homebrew/include",
+      "-Iinclude",
+      "-c",
+      "-o",
+      "build/chunk.o",
+      "src/chunk.c"
+    ],
+    "directory": "/Users/max/Developer/lars",
+    "file": "/Users/max/Developer/lars/src/chunk.c",
+    "output": "/Users/max/Developer/lars/build/chunk.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-std=c99",
+      "-Wall",
+      "-Wextra",
+      "-I/opt/homebrew/include",
+      "-Iinclude",
+      "-c",
+      "-o",
+      "build/compiler.o",
+      "src/compiler.c"
+    ],
+    "directory": "/Users/max/Developer/lars",
+    "file": "/Users/max/Developer/lars/src/compiler.c",
+    "output": "/Users/max/Developer/lars/build/compiler.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-std=c99",
+      "-Wall",
+      "-Wextra",
+      "-I/opt/homebrew/include",
+      "-Iinclude",
+      "-c",
+      "-o",
+      "build/debug.o",
+      "src/debug.c"
+    ],
+    "directory": "/Users/max/Developer/lars",
+    "file": "/Users/max/Developer/lars/src/debug.c",
+    "output": "/Users/max/Developer/lars/build/debug.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-std=c99",
+      "-Wall",
+      "-Wextra",
+      "-I/opt/homebrew/include",
+      "-Iinclude",
+      "-c",
+      "-o",
+      "build/logger.o",
+      "src/logger.c"
+    ],
+    "directory": "/Users/max/Developer/lars",
+    "file": "/Users/max/Developer/lars/src/logger.c",
+    "output": "/Users/max/Developer/lars/build/logger.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-std=c99",
+      "-Wall",
+      "-Wextra",
+      "-I/opt/homebrew/include",
+      "-Iinclude",
+      "-c",
+      "-o",
+      "build/main.o",
+      "src/main.c"
+    ],
+    "directory": "/Users/max/Developer/lars",
+    "file": "/Users/max/Developer/lars/src/main.c",
+    "output": "/Users/max/Developer/lars/build/main.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-std=c99",
+      "-Wall",
+      "-Wextra",
+      "-I/opt/homebrew/include",
+      "-Iinclude",
+      "-c",
+      "-o",
+      "build/memory.o",
+      "src/memory.c"
+    ],
+    "directory": "/Users/max/Developer/lars",
+    "file": "/Users/max/Developer/lars/src/memory.c",
+    "output": "/Users/max/Developer/lars/build/memory.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-std=c99",
+      "-Wall",
+      "-Wextra",
+      "-I/opt/homebrew/include",
+      "-Iinclude",
+      "-c",
+      "-o",
+      "build/scanner.o",
+      "src/scanner.c"
+    ],
+    "directory": "/Users/max/Developer/lars",
+    "file": "/Users/max/Developer/lars/src/scanner.c",
+    "output": "/Users/max/Developer/lars/build/scanner.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-std=c99",
+      "-Wall",
+      "-Wextra",
+      "-I/opt/homebrew/include",
+      "-Iinclude",
+      "-c",
+      "-o",
+      "build/value.o",
+      "src/value.c"
+    ],
+    "directory": "/Users/max/Developer/lars",
+    "file": "/Users/max/Developer/lars/src/value.c",
+    "output": "/Users/max/Developer/lars/build/value.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-std=c99",
+      "-Wall",
+      "-Wextra",
+      "-I/opt/homebrew/include",
+      "-Iinclude",
+      "-c",
+      "-o",
+      "build/vm.o",
+      "src/vm.c"
+    ],
+    "directory": "/Users/max/Developer/lars",
+    "file": "/Users/max/Developer/lars/src/vm.c",
+    "output": "/Users/max/Developer/lars/build/vm.o"
+  }
+]

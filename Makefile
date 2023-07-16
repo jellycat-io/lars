@@ -2,7 +2,7 @@
 CC := gcc
 CFLAGS := -std=c99 -Wall -Wextra
 LDFLAGS :=
-LDLIBS := -lcunit 
+LDLIBS := -lcunit
 
 # Platform detection
 UNAME_S := $(shell uname -s)
@@ -69,4 +69,10 @@ test: $(TESTTARGET)
 	./$(TESTTARGET)
 
 $(TESTTARGET): $(filter-out build/main.o, $(OBJS)) $(TEST_OBJS)
-	$(CC) -DTEST $(CFLAGS) $(LDFLAGS) $^ $(LDLIBS) -o $@ 
+	$(CC) -DTEST $(CFLAGS) $(LDFLAGS) $^ $(LDLIBS) -o $@
+
+# Generate compile_commands.json using bear
+bear: clean all
+	bear -- make
+
+.PHONY: all clean test

@@ -1,4 +1,5 @@
 #include "value.h"
+#include "logger.h"
 #include "memory.h"
 #include <stdio.h>
 
@@ -28,4 +29,33 @@ void writeValueArray(ValueArray *array, Value value) {
   // Write the value to the array
   array->values[array->count] = value;
   array->count++;
+}
+
+void printValue(Value value) {
+  switch (value.type) {
+  case VAL_BOOL:
+    logWithColor(ANSI_COLOR_GREEN, "%s", AS_BOOL(value) ? "true" : "false");
+    break;
+  case VAL_NIL:
+    logWithColor(ANSI_COLOR_GREEN, "%s", "nil");
+    break;
+  case VAL_NUMBER:
+    logWithColor(ANSI_COLOR_GREEN, "%g", AS_NUMBER(value));
+    break;
+  }
+}
+
+bool valuesEqual(Value a, Value b) {
+  if (a.type != b.type)
+    return false;
+  switch (a.type) {
+  case VAL_BOOL:
+    return AS_BOOL(a) == AS_BOOL(b);
+  case VAL_NIL:
+    return true;
+  case VAL_NUMBER:
+    return AS_NUMBER(a) == AS_NUMBER(b);
+  default:
+    return false; // Unreachable.
+  }
 }
