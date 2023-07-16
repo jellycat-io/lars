@@ -183,7 +183,7 @@ static void grouping() {
 // Numeric literal parsing function
 static void number() {
   double value = strtod(parser.previous.start, NULL);
-  emitConstant(value);
+  emitConstant(NUMBER_VAL(value));
 }
 
 // Unary operator parsing function

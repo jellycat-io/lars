@@ -1,4 +1,5 @@
 #include "value.h"
+#include "logger.h"
 #include "memory.h"
 #include <stdio.h>
 
@@ -28,4 +29,8 @@ void writeValueArray(ValueArray *array, Value value) {
   // Write the value to the array
   array->values[array->count] = value;
   array->count++;
+}
+
+void printValue(Value value) {
+  logWithColor(ANSI_COLOR_GREEN, "%g", AS_NUMBER(value));
 }

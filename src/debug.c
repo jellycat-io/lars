@@ -1,5 +1,5 @@
 #include "debug.h"
-#include "logger.h"
+#include "value.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -77,5 +77,3 @@ int disassembleInstruction(Chunk *chunk, int offset) {
     return offset;
   }
 }
-
-void printValue(Value value) { logWithColor(ANSI_COLOR_GREEN, "%g", value); }
