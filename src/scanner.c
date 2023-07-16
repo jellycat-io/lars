@@ -145,7 +145,7 @@ static TokenType identifierType() {
       case 'h':
         return checkKeyword(1, 3, "hen", TOKEN_THEN);
       case 'r':
-        return checkKeyword(1, 2, "ue", TOKEN_TRUE);
+        return checkKeyword(1, 3, "rue", TOKEN_TRUE);
       }
     }
     break;

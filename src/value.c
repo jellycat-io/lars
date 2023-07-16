@@ -32,5 +32,15 @@ void writeValueArray(ValueArray *array, Value value) {
 }
 
 void printValue(Value value) {
-  logWithColor(ANSI_COLOR_GREEN, "%g", AS_NUMBER(value));
+  switch (value.type) {
+  case VAL_BOOL:
+    logWithColor(ANSI_COLOR_GREEN, "%s", AS_BOOL(value) ? "true" : "false");
+    break;
+  case VAL_NIL:
+    logWithColor(ANSI_COLOR_GREEN, "%s", "nil");
+    break;
+  case VAL_NUMBER:
+    logWithColor(ANSI_COLOR_GREEN, "%g", AS_NUMBER(value));
+    break;
+  }
 }
